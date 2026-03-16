@@ -131,7 +131,7 @@ def eliminar_hotel(eliminar_id):
     if "usuario" not in session:
         return redirect("/") 
     hotel=Hotel.query.get_or_404(eliminar_id)
-    if hotel.dueno.id != session["usuario"]
+    if hotel.usuario_id != session["usuario"]
         return redirect("/")
     
     db.session.delete(hotel)
