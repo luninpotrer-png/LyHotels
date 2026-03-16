@@ -124,7 +124,7 @@ def mi_hotel():
     if "usuario" not in session:
         return redirect("/login")
     usuario = Usuario.query.filter_by(id=session["usuario"]).first()
-    hotel = Hotel.query.filter_by(usuario_id=usuario.id).first()
+    hotel = Hotel.query.filter_by(usuario_id=usuario).first()
     return render_template("mi_hotel.html", hotel=hotel)
 
 @app.route("/eliminar/<int:eliminar_id>")
