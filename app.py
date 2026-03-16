@@ -132,11 +132,11 @@ def eliminar_hotel(eliminar_id):
         return redirect("/") 
     hotel=Hotel.query.get_or_404(eliminar_id)
     if hotel.dueno.id != session["usuario"]
-        return redirect("/mi_hotel")
+        return redirect("/")
     
     db.session.delete(hotel)
     db.session.commit()
-    return redirect("/mi
+    return redirect("/mi_hotel")
 
 @app.route("/admin/panel")
 def panel_admin():
