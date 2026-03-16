@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="hotels-container">
+    {% for hotel in hotels %}
+    <div class="hotel-card">
+        <div class="card-image">
+            <img src="{{ hotel.imagen_url }}" alt="{{ hotel.nombre }}">
+            <span class="stars">{{ "★" * hotel.estrellas|int }}</span>
+        </div>
+        <div class="card-content">
+            <h3>{{ hotel.nombre }}</h3>
+            <p class="location">📍 {{ hotel.ubicacion }}</p>
+            <p class="description">{{ hotel.descripcion[:80] }}...</p>
+            <a href="/hotel/{{ hotel.id }}" class="btn-ver">Ver Detalles</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

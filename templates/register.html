@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="auth-container">
+    <div class="auth-box">
+        <h1>Crear Cuenta</h1>
+        <p>Únete a la red de hoteles más grande de Huaura</p>
+
+        {% if error %}
+            <p class="error-msg">⚠️ {{ error }}</p>
+        {% endif %}
+
+        <form action="/registro" method="POST" onsubmit="return validar_inputs_reg()">
+            <div class="input-group">
+                <label for="nombre">Nombre Real</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez" required>
+            </div>
+            <div class="input-group">
+                <label for="username_register">Username</label>
+                <input type="text" id="username_register" name="username_register" placeholder="usuario123" required>
+            </div>
+            <div class="input-group">
+                <label for="password_register">Contraseña</label>
+                <input type="password" id="password_register" name="password_register" placeholder="Crea una clave" required>
+            </div>
+            <div class="input-group">
+                <label for="password_confirm">Confirmar Contraseña</label>
+                <input type="password" id="password_confirm" name="password_confirm" placeholder="Repite tu clave" required>
+            </div>
+            <button type="submit" class="btn-auth">Registrarse</button>
+        </form>
+        <p class="auth-footer">¿Ya tienes cuenta? <a href="/login">Inicia sesión</a></p>
+    </div>
+</div>
+{% endblock %}

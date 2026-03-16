@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="detail-container">
+    <div class="detail-grid">
+        <div class="detail-image">
+            <img src="{{ hotel.imagen_url }}" alt="{{ hotel.nombre }}">
+        </div>
+        <div class="detail-info">
+            <span class="status-badge">{{ hotel.estado | upper }}</span>
+            <h1>{{ hotel.nombre }}</h1>
+            <p class="detail-location">📍 {{ hotel.ubicacion }}</p>
+            <div class="detail-stars">
+                {# Renderiza las estrellas basadas en el valor del hotel #}
+                {{ "★" * hotel.estrellas|int }}
+            </div>
+            <hr>
+            <p class="detail-desc">{{ hotel.descripcion }}</p>
+            <div class="detail-contact">
+                <p><strong>Contacto:</strong> {{ hotel.numero_contacto }}</p>
+                <p><strong>Publicado:</strong> {{ hotel.fecha }}</p>
+            </div>
+            <a href="https://wa.me/{{ hotel.numero_contacto }}" class="btn-contact" target="_blank">
+                Contactar por WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <section class="comentarios-section">
+        <hr class="divisor-comentarios">
+        <h3>Opiniones de los viajeros</h3>
+
+        {% if session['usuario'] %}
+            <div class="nuevo-comentario">
+                <h4>Deja tu opinión, {{ session['usuario'] }}</h4>
+                <form action="/comentar/{{ hotel.id }}" method="POST">
+                    {# El nombre "comentario" debe coincidir con request.form.get("comentario") en Python #}
+                    <textarea name="comentario" placeholder="¿Qué tal fue tu estancia?" required></textarea>
+
+                    <div class="form-row">
+                        <div class="selector-estrellas">
+                            <label>Calificación:</label>
+                            <select name="estrellas">
+                                <option value="1">1 Estrella ★</option>
+                                <option value="2">2 Estrellas ★★</option>
+                                <option value="3">3 Estrellas ★★★</option>
+                                <option value="4">4 Estrellas ★★★★</option>
+                                <option value="5">5 Estrellas ★★★★★</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-ver">Publicar Comentario</button>
+                    </div>
+                </form>
+            </div>
+        {% else %}
+            <div class="login-invite">
+                <p>Para dejar un comentario, debes <a href="/login">iniciar sesión</a>.</p>
+            </div>
+        {% endif %}
+        <div class="lista-comentarios">
+    {% for resena in hotel.resena_hotel %}
+        <div class="comentario-item">
+            <div class="header-comm">
+                <div class="user-info">
+                    <strong>@{{ resena.usuario.username }}</strong>
+
+                    {% if resena.usuario.username == "owenacr" %}
+                        <span class="badge-ceo">CEO ✨</span>
+                    {% endif %}
+                </div>
+                <span class="stars-gold">{{ "★" * resena.estrellas|int }}</span>
+            </div>
+            <p>{{ resena.texto }}</p>
+        </div>
+    {% endfor %}
+</div>
+    </section>
+</div>
+<style>
+    .comentarios-section { margin-top: 40px; padding: 20px; background: #fff; border-radius: 12px; }
+    .divisor-comentarios { border: 0; height: 1px; background: #eee; margin-bottom: 30px; }
+    .comentario-item { border-bottom: 1px solid #f0f0f0; padding: 15px 0; }
+    .header-comm { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .stars-gold { color: #ffcc00; }
+    .resena-texto { color: #444; line-height: 1.5; }
+    .nuevo-comentario textarea { width: 100%; border-radius: 8px; border: 1px solid #ddd; padding: 12px; margin-bottom: 10px; }
+</style>
+{% endblock %}

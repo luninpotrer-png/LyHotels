@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LyHotels H.</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <div class="menu-overlay" id="overlay"></div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="/">LyHotels</a>
+        </div>
+
+        <button class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <ul class="nav-links" id="nav-list">
+            <li><a href="/">Inicio</a></li>
+            {% if session['usuario'] %}
+                <li><a href="/crear">Publicar Hotel</a></li>
+                <li><a href="/mi_hotel">Mi Hotel</a></li>
+                <li><a href="/logout" class="btn-logout">Cerrar Sesión</a></li>
+            {% else %}
+                <li><a href="/login">Iniciar Sesión</a></li>
+                <li><a href="/registro">Registrarse</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <main class="container">
+        {% block contenido %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <footer class="main-footer">
+    <div class="footer-content">
+        <p>Desarrollado con pasión por <span class="creator-name">Owen Andree C. R.</span></p>
+        <div class="footer-links">
+            <span>&copy; 2026 LyHotels</span>
+            <span class="separator">|</span>
+            <span class="tech-stack">Flask & Python Expert</span>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

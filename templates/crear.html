@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block contenido %}
+
+<section class="crear_hotel">
+    <h1>Registrar mi hotel</h1>
+    <form action="/crear" method="POST" enctype="multipart/form-data">
+        <input type="text" name="nombre_hotel" placeholder="nombre de hotel" required>
+        <input type="text" name="ubicacion" placeholder="ejemp: Huacho-Av.Salaverry" required>
+        <input type="text" placeholder="telefono" name="telefono" required>
+        <textarea name="descripcion" placeholder="añadir una descripcion"></textarea>
+        <input type="number" name="estrellas" min="1" max="5" placeholder="Estrellas (1-5)">
+        <input type="file" name="imagen" accept="image/*">
+        <button type="submit">Subir</button>
+    </form>
+</section>
+{% endblock %}
