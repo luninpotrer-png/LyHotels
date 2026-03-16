@@ -123,15 +123,20 @@ def comentar(hotel_id):
 def mi_hotel():
     if "usuario" not in session:
         return redirect("/login")
-    usuario = Usuario.query.filter_by(id=session["usuario"]).first()
-    hotel = Hotel.query.filter_by(usuario_id=usuario).first()
+    hotel = Hotel.query.filter_by(usuario_id=session["usuario"]).first()
     return render_template("mi_hotel.html", hotel=hotel)
 
 @app.route("/eliminar/<int:eliminar_id>")
 def eliminar_hotel(eliminar_id):
     if "usuario" not in session:
-        return redirect("/")
+        return redirect("/") 
     hotel=Hotel.query.get_or_404(eliminar_id)
+    if hotel.dueno.id != session["usuario"]
+        return redirect("/mi_hotel")
+    
+    db.session.delete(hotel)
+    db.session.commit()
+    return redirect("/mi
 
 @app.route("/admin/panel")
 def panel_admin():
