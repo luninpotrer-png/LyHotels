@@ -1,53 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MC38369S');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LyHotels H.</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>LyHotels - Huaura</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; }
+        nav { background: #2c3e50; padding: 1rem; color: white; display: flex; justify-content: space-between; align-items: center; }
+        nav a { color: white; text-decoration: none; margin: 0 10px; font-weight: 600; }
+        .footer { background: #2c3e50; color: white; text-align: center; padding: 20px 0; margin-top: auto; }
+        .ceo-badge { background: gold; color: black; padding: 2px 8px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; }
+    </style>
 </head>
 <body>
-
-    <div class="menu-overlay" id="overlay"></div>
-
-    <nav class="navbar">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MC38369S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <nav>
         <div class="logo">
-            <a href="/">LyHotels</a>
+            <a href="{{ url_for('index') }}">🏨 LyHotels</a>
         </div>
-
-        <button class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-
-        <ul class="nav-links" id="nav-list">
-            <li><a href="/">Inicio</a></li>
-            {% if session['usuario'] %}
-                <li><a href="/crear">Publicar Hotel</a></li>
-                <li><a href="/mi_hotel">Mi Hotel</a></li>
-                <li><a href="/logout" class="btn-logout">Cerrar Sesión</a></li>
+        <div class="menu">
+            <a href="{{ url_for('index') }}">Inicio</a>
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('crear_hotel') }}">Registrar Hotel</a>
+                <a href="{{ url_for('logout') }}">Cerrar Sesión</a>
+                <span class="ceo-badge">CEO: {{ session.get('username') }}</span>
             {% else %}
-                <li><a href="/login">Iniciar Sesión</a></li>
-                <li><a href="/registro">Registrarse</a></li>
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Registro</a>
             {% endif %}
-        </ul>
+        </div>
     </nav>
 
-    <main class="container">
-        {% block contenido %}{% endblock %}
+    <main>
+        {% block content %}{% endblock %}
     </main>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-    <footer class="main-footer">
-    <div class="footer-content">
-        <p>Desarrollado con pasión por <span class="creator-name">Owen Andree C. R.</span></p>
-        <div class="footer-links">
-            <span>&copy; 2026 LyHotels</span>
-            <span class="separator">|</span>
-            <span class="tech-stack">Flask & Python Expert</span>
-        </div>
-    </div>
-</footer>
+    <footer class="footer">
+        <p>&copy; 2026 LyHotels Huaura - Plataforma Profesional de Gestión</p>
+        <p>Desarrollado por Owen - Lead Developer</p>
+    </footer>
 </body>
 </html>
