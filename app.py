@@ -127,6 +127,12 @@ def mi_hotel():
     hotel = Hotel.query.filter_by(usuario_id=usuario.id).first()
     return render_template("mi_hotel.html", hotel=hotel)
 
+@app.route("/eliminar/<int:eliminar_id>")
+def eliminar_hotel(eliminar_id):
+    if "usuario" not in session:
+        return redirect("/")
+    hotel=Hotel.query.get_or_404(eliminar_id)
+
 @app.route("/admin/panel")
 def panel_admin():
     if "usuario" not in session:

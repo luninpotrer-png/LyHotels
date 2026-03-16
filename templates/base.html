@@ -8,49 +8,56 @@
     })(window,document,'script','dataLayer','GTM-MC38369S');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LyHotels - Huaura</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="/static/css/style.css">
-
-    <style>
-        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
-        nav { background: #2c3e50; padding: 1rem; color: white; display: flex; justify-content: space-between; align-items: center; }
-        nav a { color: white; text-decoration: none; margin: 0 10px; font-weight: 600; }
-        .footer { background: #2c3e50; color: white; text-align: center; padding: 20px 0; margin-top: auto; }
-        .ceo-badge { background: gold; color: black; padding: 2px 8px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; }
-        main { flex: 1; }
-    </style>
+    <title>LyHotels H.</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MC38369S"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <nav>
+    <div class="menu-overlay" id="overlay"></div>
+
+    <nav class="navbar">
         <div class="logo">
-            <a href="/">🏨 LyHotels</a>
+            <a href="/">LyHotels</a>
         </div>
-        <div class="menu">
-            <a href="/">Inicio</a>
-            {% if session.get('user_id') %}
-                <a href="/crear">Registrar Hotel</a>
-                <a href="/logout">Cerrar Sesión</a>
-                <span class="ceo-badge">CEO: {{ session.get('username') }}</span>
+
+        <button class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <ul class="nav-links" id="nav-list">
+            <li><a href="/">Inicio</a></li>
+            {% if session['usuario'] %}
+                <li><a href="/crear">Publicar Hotel</a></li>
+                <li><a href="/mi_hotel">Mi Hotel</a></li>
+                <li><a href="/logout" class="btn-logout">Cerrar Sesión</a></li>
+                {% if session['usuario'] == 'owenceo' %}
+                    <li style="color: gold; font-weight: bold; margin-left: 10px;">✨ CEO</li>
+                {% endif %}
             {% else %}
-                <a href="/login">Login</a>
-                <a href="/register">Registro</a>
+                <li><a href="/login">Iniciar Sesión</a></li>
+                <li><a href="/registro">Registrarse</a></li>
             {% endif %}
-        </div>
+        </ul>
     </nav>
 
-    <main>
-        {% block content %}{% endblock %}
+    <main class="container">
+        {% block contenido %}{% endblock %}
     </main>
 
-    <footer class="footer">
-        <p>&copy; 2026 LyHotels Huaura - Plataforma Profesional de Gestión</p>
-        <p>Desarrollado por Owen - Lead Developer</p>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>Desarrollado por <span class="creator-name">Owen Andree C.R.</span></p>
+            <div class="footer-links">
+                <span>&copy; 2026 LyHotels</span>
+                <span class="separator">|</span>
+                <span class="tech-stack">Flask & Python Expert</span>
+            </div>
+        </div>
     </footer>
 </body>
 </html>

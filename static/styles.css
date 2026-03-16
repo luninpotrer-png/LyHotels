@@ -356,10 +356,8 @@ body {
 }
 
 .creator-name {
-    color: #00ffcc;
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-shadow: 0 0 10px rgba(0, 255, 204, 0.4); /* Efecto neón */
+    color: #888;
+    letter-spacing: 2px
 }
 
 .footer-links {
@@ -514,56 +512,6 @@ body {
 .auth-footer a:hover {
     text-decoration: underline;
 }
-</div> <section class="seccion-comentarios">
-        <hr class="divisor">
-        <h2>Opiniones de la comunidad</h2>
-
-        {% if session['usuario'] %}
-            <div class="caja-comentar">
-                <form action="/comentar/{{ hotel.id }}" method="POST">
-                    <textarea name="comentario" placeholder="Cuéntanos tu experiencia..." required></textarea>
-                    <div class="fila-controles">
-                        <div class="selector-estrellas">
-                            <label>Calificación:</label>
-                            <select name="estrellas">
-                                <option value="5">5 ★ (Excelente)</option>
-                                <option value="4">4 ★ (Muy bueno)</option>
-                                <option value="3">3 ★ (Regular)</option>
-                                <option value="2">2 ★ (Malo)</option>
-                                <option value="1">1 ★ (Pésimo)</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn-enviar-comentario">Publicar Opinión</button>
-                    </div>
-                </form>
-            </div>
-        {% else %}
-            <div class="mensaje-registro">
-                <p>¿Quieres dejar una reseña? <a href="/login">Inicia sesión aquí</a></p>
-            </div>
-        {% endif %}
-
-        <div class="lista-resenas">
-            {% for resena in hotel.resenas %}
-                <div class="tarjeta-resena">
-                    <div class="resena-header">
-                        <span class="resena-usuario">@{{ resena.usuario.username }}</span>
-                        <span class="resena-estrellas">{{ "★" * resena.estrellas|int }}</span>
-                    </div>
-                    <p class="resena-texto">{{ resena.texto }}</p>
-                </div>
-            {% else %}
-                <p class="sin-comentarios">Aún no hay reseñas para este hotel. ¡Sé el primero!</p>
-            {% endfor %}
-        </div>
-    </section>
-
-</div> ```
-
-### 2. Sugerencia de CSS (Si quieres retocar el tuyo)
-Para que no desentone con el estilo "Hacker-Clean" que armamos:
-
-```css
 .seccion-comentarios {
     margin-top: 40px;
     padding: 20px;
@@ -606,4 +554,194 @@ Para que no desentone con el estilo "Hacker-Clean" que armamos:
     text-transform: uppercase;
     box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
     border: 1px solid #b8860b;
+}
+/* --- PANEL DE ADMINISTRACIÓN (Aprobación) --- */
+.admin-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.admin-title {
+    font-size: 2rem;
+    color: #1a1a1a;
+    margin-bottom: 30px;
+    border-left: 6px solid #00ffcc;
+    padding-left: 15px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-table th {
+    text-align: left;
+    background: #1a1a1a;
+    color: #00ffcc;
+    padding: 15px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.admin-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    color: #444;
+    font-size: 1rem;
+}
+
+.admin-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Botón de Aprobar Estilo Hacker */
+.btn-aprobar {
+    display: inline-block;
+    background: #1a1a1a;
+    color: #2ecc71; /* Verde éxito */
+    padding: 8px 16px;
+    border: 1px solid #2ecc71;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.85rem;
+    transition: 0.3s;
+}
+
+.btn-aprobar:hover {
+    background: #2ecc71;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.4);
+    transform: translateY(-2px);
+}
+
+.owner-badge {
+    background: #eee;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Responsivo para móviles */
+@media screen and (max-width: 600px) {
+    .admin-table th { display: none; }
+    .admin-table td {
+        display: block;
+        text-align: right;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+    .admin-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #888;
+    }
+}
+/* Contenedor principal de gestión */
+.panel-container {
+    max-width: 1000px;
+    margin: 40px auto; /* Centra el bloque en la pantalla */
+    padding: 0 20px;   /* Evita que el texto toque los bordes en celulares */
+}
+
+.panel-title {
+    font-size: 2rem;
+    color: #fff; /* O el color de tu tema oscuro */
+    margin-bottom: 30px;
+    border-left: 5px solid #00ffcc;
+    padding-left: 15px;
+}
+
+/* Estilo cuando no hay hotel */
+.empty-management {
+    background: #1e1e1e;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: left;
+    border: 1px solid #333;
+}
+
+.empty-management p {
+    color: #ccc;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+/* Botón específico para esta sección */
+.empty-management .btn-ver {
+    display: inline-block;
+    padding: 12px 25px;
+    /* Tu estilo neón */
+    background: transparent;
+    color: #00ffcc;
+    border: 1px solid #00ffcc;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.empty-management .btn-ver:hover {
+    background: #00ffcc;
+    color: #1a1a1a;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+}
+/* Este contenedor es la clave para que no se vea pegado a la izquierda */
+.panel-container {
+    max-width: 1000px;
+    margin: 60px auto; /* Centra el bloque y da espacio arriba/abajo */
+    padding: 0 25px;   /* Margen interno para que no toque los bordes */
+}
+
+.panel-title {
+    font-size: 2.2rem;
+    color: #0a0a0a;
+    margin-bottom: 35px;
+    border-left: 5px solid #00ffcc; /* Tu línea neón */
+    padding-left: 20px;
+}
+
+/* Caja para cuando no hay hoteles registrada */
+.empty-management {
+    background: #1a1a1a;
+    padding: 50px;
+    border-radius: 15px;
+    border: 1px solid #333;
+    text-align: left; /* Mantiene el texto alineado pero dentro del bloque centrado */
+}
+
+.empty-management p {
+    color: #888;
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+/* Botón estilizado */
+.btn-ver {
+    display: inline-block;
+    padding: 12px 30px;
+    background: transparent;
+    color: #00ffcc;
+    border: 1px solid #00ffcc;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-ver:hover {
+    background: #00ffcc;
+    color: #1a1a1a;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
 }

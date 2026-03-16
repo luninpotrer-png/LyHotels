@@ -1,25 +1,32 @@
 {% extends "base.html" %}
+
 {% block contenido %}
 <div class="panel-container">
-    <h2 class="panel-title">Gestión de mi Hotel</h2>
+    <h1 class="panel-title">Gestión de mi Hotel</h1>
 
     {% if hotel %}
-    <div class="manage-card">
-        <img src="{{ hotel.imagen_url }}" alt="Miniatura">
-        <div class="manage-info">
-            <h3>{{ hotel.nombre }}</h3>
-            <p>Estado: <strong class="{{ hotel.estado }}">{{ hotel.estado }}</strong></p>
+        <div class="manage-card">
+            <img src="{{ hotel.imagen_url }}" alt="{{ hotel.nombre }}">
+            <div class="manage-info">
+                <h3>{{ hotel.nombre }}</h3>
+                <p class="status">
+                    Estado:
+                    {% if hotel.aprobado %}
+                        <span class="aprobado"><i class="fas fa-check-circle"></i> Aprobado</span>
+                    {% else %}
+                        <span class="pendiente"><i class="fas fa-clock"></i> Pendiente</span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="manage-actions">
+                <a href="/borrar/{{ hotel.id }}" class="btn-borrar">Borrar Hotel</a>
+            </div>
         </div>
-        <div class="manage-actions">
-            <a href="/hotel/{{ hotel.id }}" class="btn-mini">Ver</a>
-            <a href="#" class="btn-mini btn-edit">Editar</a>
-        </div>
-    </div>
     {% else %}
-    <div class="no-data">
-        <p>Aún no has registrado ningún hotel.</p>
-        <a href="/crear" class="btn-ver">Registrar mi primer hotel</a>
-    </div>
+        <div class="empty-management">
+            <p>Aún no has registrado ningún hotel.</p>
+            <a href="/crear" class="btn-ver">Registrar mi primer hotel</a>
+        </div>
     {% endif %}
 </div>
 {% endblock %}

@@ -1,19 +1,36 @@
 {% extends "base.html" %}
+
 {% block contenido %}
-<h1>Panel de Aprobación</h1>
-<table>
-    <tr>
-        <th>Hotel</th>
-        <th>Dueño</th>
-        <th>Acción</th>
-    </tr>
-    {% for h in hoteles_pendientes %}
-    <tr>
-        <td>{{ h.nombre }}</td>
-        <td>{{ h.dueno.username }}</td> <td>
-            <a href="/admin/aprobar/{{ h.id }}">✅ Aprobar</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+<div class="admin-container">
+    <h1 class="admin-title">Panel de Aprobación</h1>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Hotel</th>
+                <th>Dueño</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hotel in hoteles_pendientes %}
+            <tr>
+                <td data-label="Hotel"><strong>{{ hotel.nombre }}</strong></td>
+                <td data-label="Dueño"><span class="owner-badge">@{{ hotel.dueno.username }}</span></td>
+                <td data-label="Acción">
+                    <a href="/aprobar/{{ hotel.id }}" class="btn-aprobar">
+                        <i class="fas fa-check"></i> Aprobar Hotel
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3" style="text-align: center; padding: 40px; color: #888;">
+                    No hay hoteles pendientes de aprobación.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
